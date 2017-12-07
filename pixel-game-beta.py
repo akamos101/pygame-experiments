@@ -15,7 +15,7 @@ height = 400
 qb_x = width / 2    # Initial x-coordinate
 qb_y = height / 2   # Initial y-coordinate
 
-qbert_step_size = 2 # Step size to control "speed" of qbert
+qbert_step_size = 2  # Step size to control "speed" of qbert
 
 qb_width = 10
 qb_color = (255, 0, 255)
@@ -34,6 +34,18 @@ enemy_border_width = 3
 enemy_border_color = (0, 0, 150)
 
 num_enemies = 1     # Number of enemies to spawn
+
+# Turret Info
+turret_margin = 10
+turret_step_size = 0
+
+turret_width = 15
+turret_color = (255, 255, 0)
+
+turret_border_width = 3
+turret_border_color = (255, 110, 0)
+
+
 
 # Initialize enemy positions
 enemy = {}
@@ -94,6 +106,7 @@ dir_x = 0
 dir_y = -1*qbert_step_size
 
 screen = pygame.display.set_mode((width, height))
+pygame.display.set_caption('Qubert The Fat Magenta Square')
 clock = pygame.time.Clock()
 running = True
 
@@ -169,7 +182,7 @@ while running:
               dir_y = 0
 
   pygame.display.flip()
-  clock.tick(100)
+  clock.tick(50)
 
 
 
