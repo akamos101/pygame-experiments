@@ -35,6 +35,20 @@ enemy_border_color = (0, 0, 150)
 
 num_enemies = 20     # Number of enemies to spawn
 
+
+# Turret Info
+turret_margin = 10
+turret_step_size = 0
+
+turret_width = 15
+turret_color = (255, 255, 0)
+
+turret_border_width = 3
+turret_border_color = (255, 110, 0)
+
+
+
+
 # Initialize enemy positions
 enemy = np.zeros((num_enemies, 2)).astype(np.int)
 for i in range(num_enemies):
