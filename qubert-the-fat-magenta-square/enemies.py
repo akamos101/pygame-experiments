@@ -8,14 +8,14 @@ import math
 
 
 # Enemy info.
-enemy_margin = 5    # Margin for enemy box
-enemy_step_size = 1 # Step size to control "speed" of enemys
+ENEMY_MARGIN = 5    # Margin for enemy box
+ENEMY_STEP_SIZE = 1 # Step size to control "speed" of enemys
 
-enemy_width = 15
-enemy_color = (0, 0, 255)
+ENEMY_WIDTH = 15
+ENEMY_COLOR = (0, 0, 255)
 
-enemy_border_width = 3
-enemy_border_color = (0, 0, 150)
+ENEMY_BORDER_WIDTH = 3
+ENEMY_BORDER_COLOR = (0, 0, 150)
 
 
 
@@ -41,18 +41,18 @@ class Enemies(object):
       # Depending on which side chosen, choose a random point on that side
       if type_1:
         if type_2:
-          self.matrix[i,0] = random.randint(enemy_margin, screen.get_width() - enemy_margin)
-          self.matrix[i,1] = enemy_margin
+          self.matrix[i,0] = random.randint(ENEMY_MARGIN, screen.get_width() - ENEMY_MARGIN)
+          self.matrix[i,1] = ENEMY_MARGIN
         else:
-          self.matrix[i,0] = random.randint(enemy_margin, screen.get_width() - enemy_margin)
-          self.matrix[i,1] = screen.get_height() - enemy_margin
+          self.matrix[i,0] = random.randint(ENEMY_MARGIN, screen.get_width() - ENEMY_MARGIN)
+          self.matrix[i,1] = screen.get_height() - ENEMY_MARGIN
       else:
         if type_2:
-          self.matrix[i,0] = enemy_margin
-          self.matrix[i,1] = random.randint(enemy_margin, screen.get_height() - enemy_margin)
+          self.matrix[i,0] = ENEMY_MARGIN
+          self.matrix[i,1] = random.randint(ENEMY_MARGIN, screen.get_height() - ENEMY_MARGIN)
         else:
-          self.matrix[i,0] = screen.get_width() - enemy_margin
-          self.matrix[i,1] = random.randint(enemy_margin, screen.get_height() - enemy_margin)
+          self.matrix[i,0] = screen.get_width() - ENEMY_MARGIN
+          self.matrix[i,1] = random.randint(ENEMY_MARGIN, screen.get_height() - ENEMY_MARGIN)
 
 
   # Advance the enemy positions
@@ -71,18 +71,18 @@ class Enemies(object):
       vec_length = np.linalg.norm([vec_x, vec_y])
 
       # Check to see if Qbert has hit an enemy; if yes, terminate game
-      if vec_length < qubert.width+enemy_width:
+      if vec_length < qubert.width+ENEMY_WIDTH:
         print("You've been hit by enemy #%d!" % (i+1))
         qubert.alive = False
 
       # Check to see if enemy has hit a bullet; if yes, set enemy died flag to 1
       for j in range(turrets.bullets.shape[0]):
-        if np.linalg.norm(turrets.bullets[j,0:2] - self.matrix[i,0:2]) <= (enemy_width + 2):
+        if np.linalg.norm(turrets.bullets[j,0:2] - self.matrix[i,0:2]) <= (ENEMY_WIDTH + 2):
           self.matrix[i,2]=1
 
       # Scale the vector to the length enemy_step_size
       # Remember to convert step size to float to do decimal division
-      scale = float(enemy_step_size)/vec_length
+      scale = float(ENEMY_STEP_SIZE)/vec_length
 
       # Remember to convert back to integers to set position
       # Round up if positive direction, round down if negative direction
@@ -107,8 +107,8 @@ class Enemies(object):
 
     for i in range(self.matrix.shape[0]):
       # Draw enemy i
-      pygame.draw.circle(self.screen, enemy_color, (self.matrix[i,0], self.matrix[i,1]), enemy_width)
-      pygame.draw.circle(self.screen, enemy_border_color, (self.matrix[i,0], self.matrix[i,1]), enemy_width, enemy_border_width)
+      pygame.draw.circle(self.screen, ENEMY_COLOR, (self.matrix[i,0], self.matrix[i,1]), ENEMY_WIDTH)
+      pygame.draw.circle(self.screen, ENEMY_BORDER_COLOR, (self.matrix[i,0], self.matrix[i,1]), ENEMY_WIDTH, ENEMY_BORDER_WIDTH)
 
 
 
