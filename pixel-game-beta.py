@@ -25,7 +25,7 @@ qb_border_color = (150, 0, 150)
 
 # Enemy info.
 enemy_margin = 5    # Margin for enemy box
-enemy_step_size = 1 # Step size to control "speed" of enemy
+enemy_step_size = 1 # Step size to control "speed" of enemys
 
 enemy_width = 15
 enemy_color = (0, 0, 255)
@@ -33,7 +33,7 @@ enemy_color = (0, 0, 255)
 enemy_border_width = 3
 enemy_border_color = (0, 0, 150)
 
-num_enemies = 10     # Number of enemies to spawn
+num_enemies = 1     # Number of enemies to spawn
 
 # Initialize enemy positions
 enemy = {}
@@ -169,7 +169,7 @@ while running:
               dir_y = 0
 
   pygame.display.flip()
-  clock.tick(120)
+  clock.tick(100)
 
 
 
