@@ -45,7 +45,6 @@ class Qubert(object):
     self.x += self.direction_x
     self.y += self.direction_y
 
-
   # Draw the object on the screen
   def draw(self):
 
@@ -60,5 +59,10 @@ class Qubert(object):
     self.screen.fill(BORDER_COLOR, rect=qb_border)
     self.screen.fill(SQUARE_COLOR, rect=qb)
 
+  # Get the vector from a point to Qubert's current location
+  def get_direction_vec(self, x, y):
+    vec_x = float(self.x) - float(x)
+    vec_y = float(self.y) - float(y)
+    return (vec_x, vec_y)
 
 

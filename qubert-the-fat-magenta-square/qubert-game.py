@@ -5,7 +5,7 @@
 #
 # Copyright (C) 2017 Spencer Cobain and Rachel Levanger
 # Authors: 
-#           Spencer Cobain <akamosmuffin@gmail.com>
+#           Spencer Cobain <kamosmuffin@gmail.com>
 #           Rachel Levanger <rachel.levanger@gmail.com>
 #############################################################
 
@@ -42,8 +42,6 @@ parser.add_option("-e", dest="num_enemies",
 num_enemies = int(options.num_enemies)  # Number of enemies to spawn
 
 
-
-
 #############################################################
 # Initialize Objects
 #############################################################
@@ -66,7 +64,6 @@ running = True
 paused = False
 
 
-
 #############################################################
 # Game play
 #############################################################
@@ -84,12 +81,14 @@ while running:
         running = False
 
     # Advance the bullet positions and add fire additional bullets
-    turrets.advance_bullets(qubert)
+    qubert = turrets.advance_bullets(qubert)
+    if not qubert.alive:
+      running = False
 
     # Advance the enemy positions
     # Kill them off it they hit bullets
     # Also kill off Qubert if he hits an enemy
-    qubert = enemies.advance_positions(qubert)
+    qubert = enemies.advance_positions(qubert, turrets)
     if not qubert.alive:
       running = False
 
@@ -100,6 +99,12 @@ while running:
     turrets.draw()
     enemies.draw()
     qubert.draw()
+    turrets.draw_bullets()
+
+    # Check to see if you beat the game
+    if enemies.matrix.shape[0] == 0:
+      print("Qubert escaped certain death!")
+      running = False
 
   # Check for keypress events in the game
   for event in pygame.event.get():

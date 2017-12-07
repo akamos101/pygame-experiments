@@ -31,8 +31,8 @@ class Enemies(object):
 
     self.screen = screen
 
-    # Matrix holding enemy positions
-    self.matrix = np.zeros((num_enemies, 2)).astype(np.int)
+    # Matrix holding enemy positions and whether or not enemy is dead
+    self.matrix = np.zeros((num_enemies, 3)).astype(np.int)
     for i in range(num_enemies):
       # Choose random numbers in {0,1} to determine top/bottom/left/right
       # side of a rectangle centered about the initial position of Qbert
@@ -56,7 +56,7 @@ class Enemies(object):
 
 
   # Advance the enemy positions
-  def advance_positions(self, qubert):
+  def advance_positions(self, qubert, turrets):
 
     # Loop through all of the enemies
     for i in range(self.matrix.shape[0]):
@@ -65,9 +65,7 @@ class Enemies(object):
       # Go an enemy_step_size pixel length in a straight line toward Qbert
 
       # Get vector from Enemy to Qbert
-      # Use floats for higher precision later
-      vec_x = float(qubert.x - self.matrix[i,0])
-      vec_y = float(qubert.y - self.matrix[i,1])
+      (vec_x, vec_y) = qubert.get_direction_vec(self.matrix[i,0], self.matrix[i,1])
 
       # Compute the length of the vector
       vec_length = np.linalg.norm([vec_x, vec_y])
@@ -76,6 +74,11 @@ class Enemies(object):
       if vec_length < qubert.width+enemy_width:
         print("You've been hit by enemy #%d!" % (i+1))
         qubert.alive = False
+
+      # Check to see if enemy has hit a bullet; if yes, set enemy died flag to 1
+      for j in range(turrets.bullets.shape[0]):
+        if np.linalg.norm(turrets.bullets[j,0:2] - self.matrix[i,0:2]) <= (enemy_width + 2):
+          self.matrix[i,2]=1
 
       # Scale the vector to the length enemy_step_size
       # Remember to convert step size to float to do decimal division
@@ -91,6 +94,9 @@ class Enemies(object):
         self.matrix[i,1] += int(math.ceil(scale*vec_y))
       else:
         self.matrix[i,1] += int(math.floor(scale*vec_y))
+
+    # Only keep the enemies that are still alive
+    self.matrix = self.matrix[(self.matrix[:,2]==0),:]
 
     return qubert
 
