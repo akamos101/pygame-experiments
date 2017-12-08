@@ -22,7 +22,7 @@ BULLET_STEP_SIZE = 3
 BULLET_COLOR = (100, 100, 100)
 
 BULLET_WIDTH = 3
-BULLET_RATE = 2000  # Milliseconds
+# BULLET_RATE = 2000  # Milliseconds
 
 
 #############################################################
@@ -32,7 +32,7 @@ BULLET_RATE = 2000  # Milliseconds
 class Turrets(object):
 
   # Initialize the object
-  def __init__(self, screen):
+  def __init__(self, screen, firing_rate):
 
     # Attach the screen object to the turret object for easy access
     self.screen = screen
@@ -49,6 +49,7 @@ class Turrets(object):
     self.matrix[3,1] = self.screen.get_height() - TURRET_MARGIN
 
     # Initialize empty list of bullets
+    self.firing_rate = firing_rate
     self.bullets_last_time = pygame.time.get_ticks()
     self.bullets = np.asarray([])
 
@@ -74,7 +75,7 @@ class Turrets(object):
         qubert.alive = False
 
     # If enough time has passed, create a new batch of bullets
-    if duration > BULLET_RATE:
+    if duration > self.firing_rate:
       self.bullets_last_time = current_time
       # Fire more bullets!
       self.bullets = np.vstack((self.bullets, self.fire_bullets(qubert)))

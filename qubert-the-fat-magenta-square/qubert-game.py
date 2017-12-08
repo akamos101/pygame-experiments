@@ -29,17 +29,20 @@ import turrets as qb_turrets
 # Parse the options supplied by the user
 #############################################################
 
-parser = OptionParser('usage: -e num_enemies')
+parser = OptionParser('usage: -e num_enemies -b bullet_rate')
 
 # Define the options
 parser.add_option("-e", dest="num_enemies",
                   help="Number of enemies to spawn")
+parser.add_option("-f", dest="firing_rate",
+                  help="Milliseconds between firings")
 
 # Parse the options
 (options, args) = parser.parse_args()
 
 # Populate variables corresponding to user-supplied options
 num_enemies = int(options.num_enemies)  # Number of enemies to spawn
+firing_rate = int(options.firing_rate)  # Number of milliseconds between firings
 
 
 #############################################################
@@ -53,7 +56,7 @@ clock = pygame.time.Clock()
 # Active agents in game
 qubert = qb_qubert.Qubert(screen)
 enemies = qb_enemies.Enemies(screen, num_enemies)
-turrets = qb_turrets.Turrets(screen)
+turrets = qb_turrets.Turrets(screen, firing_rate)
 
 
 #############################################################
